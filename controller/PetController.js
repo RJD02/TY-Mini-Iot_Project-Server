@@ -44,10 +44,14 @@ exports.fedPet = async (req, res) => {
       });
     }
     if (message === "Success") {
+      console.log("Success");
       pet.latestFed = Date.now();
       pet.latestRequest = false;
     }
     await pet.save();
+    return res.status(201).json({
+      message: "Successfully fed the pet",
+    });
   } catch (err) {
     console.log(err);
     return res.status(500).json({

@@ -34,17 +34,17 @@ app.get("/feed", (req, res) => {
 
 app.use("/pet", petRouter);
 
-// const test = async () => {
-//   try {
-//     const pet = await Pet.findOne({ latestRequest: false });
-//     pet.latestRequest = true;
-//     await pet.save();
-//   } catch (err) {
-//     console.log("All pets have latest request");
-//   }
-// };
+const test = async () => {
+  try {
+    const pet = await Pet.findOne({ latestRequest: false });
+    pet.latestRequest = true;
+    await pet.save();
+  } catch (err) {
+    console.log("All pets have latest request");
+  }
+};
 
-// test();
+test();
 
 app.listen(process.env.PORT || 7000, (req, res) => {
   console.log("Running on port 7000");
