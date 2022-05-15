@@ -1,18 +1,18 @@
 const Pet = require("../models/Pet");
 
-exports.getAllPets = async(req, res) => {
+exports.getAllPets = async (req, res) => {
   try {
-    const pets = Pet.find();
+    const pets = await Pet.find({});
     res.status(201).json({
-      pets
-    })
+      pets,
+    });
   } catch (err) {
     console.log(err);
     return res.status(500).json({
-      message: 'Internal server error'
-    })
+      message: "Internal server error",
+    });
   }
-}
+};
 
 exports.toFeedController = async (req, res) => {
   const petID = req.body.petID;
