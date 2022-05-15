@@ -1,9 +1,23 @@
 const Pet = require("../models/Pet");
 
+exports.getAllPets = async(req, res) => {
+  try {
+    const pets = Pet.find();
+    res.status(201).json({
+      pets
+    })
+  } catch (err) {
+    console.log(err);
+    return res.status(500).json({
+      message: 'Internal server error'
+    })
+  }
+}
+
 exports.toFeedController = async (req, res) => {
   const petID = req.body.petID;
-  const pet = await Pet.find({ petID });
-  if (pet.latestRequest) {
+  const pet = await Pet.findOne({ petID });
+  if (pet.latestRequest === true) {
     res.send({
       message: "Yes",
     });
