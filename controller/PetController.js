@@ -51,7 +51,7 @@ exports.fedPet = async (req, res) => {
   const petID = req.body.petID;
   const message = req.body.message;
   try {
-    const pet = await Pet.findOne({ petID });
+    const pet = await Pet.findOne({ _id: petID });
     console.log(pet);
     if (!pet) {
       return res.status(404).json({
@@ -60,7 +60,7 @@ exports.fedPet = async (req, res) => {
     }
     if (message === "Success") {
       console.log("Success");
-      pet.latestFed = Date.now();
+      pet.lastFed = Date.now();
       pet.latestRequest = false;
     }
     await pet.save();
@@ -77,20 +77,22 @@ exports.fedPet = async (req, res) => {
 
 // const petExists = async(pet)
 
-exports.feedPet = async (req, res) => {
-  const _id = req.body.petID;
-  console.log(_id);
+exports.feedNow = async (req, res) => {
+  const petID = req.body.petID;
+  console.log(req.body);
   try {
-    const pet = await Pet.findOne({ _id });
+    const pet = await Pet.findOne({ _id: petID });
+    console.log("pet = ", pet);
     if (!pet) {
       return res.status(404).json({
-        message: "Pet node found",
+        message: "Pet not found",
       });
     }
-
-    pet.latestRequest = false;
-    pet.lastFed = Date.now();
+    pet.latestRequest = true;
     await pet.save();
+    return res.status(201).json({
+      message: `${pet.petType} is being fed`,
+    });
   } catch (err) {
     return res.status(500).json({
       message: "Internal Server Error",

@@ -4,7 +4,7 @@ const {
   createPet,
   fedPet,
   getAllPets,
-  feedPet,
+  feedNow,
 } = require("../controller/PetController");
 
 const router = express.Router();
@@ -17,6 +17,6 @@ router.route("/pet").post(createPet);
 
 router.route("/fed").post(fedPet);
 
-router.route("/feedPet").post(feedPet);
+router.route("/feedNow").post(feedNow);
 
 module.exports = router;
