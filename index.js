@@ -25,7 +25,11 @@ app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 app.use(
   cors({
-    origin: ["http://localhost:3000", "https://pet-feeder-iot-da575.web.app"],
+    origin: [
+      "http://localhost:3000",
+      "https://pet-feeder-iot-da575.web.app",
+      "https://6281d7e0f4c6d549a135c920--serene-salmiakki-5d5245.netlify.app/",
+    ],
   })
 );
 
