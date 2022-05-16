@@ -1,13 +1,13 @@
+require("dotenv").config();
 const express = require("express");
 const app = express();
 const cors = require("cors");
 const mongoose = require("mongoose");
 const petRouter = require("./routes/PetRoute");
 const Pet = require("./models/Pet");
-
 mongoose
   .connect(
-    "mongodb+srv://admin-raviraj:test123@cluster0.lkxsz.mongodb.net/PetFeed?retryWrites=true&w=majority",
+    `mongodb+srv://${process.env.MONGO_PASSWORD}@cluster0.lkxsz.mongodb.net/PetFeed?retryWrites=true&w=majority`,
     {
       useNewUrlParser: true,
       useUnifiedTopology: true,
@@ -23,7 +23,11 @@ mongoose
 
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
-
+app.use(
+  cors({
+    origin: "http://localhost:3000",
+  })
+);
 app.get("/", (req, res) => {
   res.send("Hello World");
 });
