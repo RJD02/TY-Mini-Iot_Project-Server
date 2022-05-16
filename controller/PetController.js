@@ -34,9 +34,10 @@ exports.createPet = async (req, res) => {
   // const petID = uuid
   const petType = req.body.petType;
   try {
-    await Pet.create({ lastFed, latestRequest, petType });
+    const pet = await Pet.create({ lastFed, latestRequest, petType });
     res.status(201).json({
       message: "Successfull",
+      id: pet._id,
     });
   } catch (err) {
     console.log(err);
@@ -75,3 +76,24 @@ exports.fedPet = async (req, res) => {
 };
 
 // const petExists = async(pet)
+
+exports.feedPet = async (req, res) => {
+  const _id = req.body.petID;
+  console.log(_id);
+  try {
+    const pet = await Pet.findOne({ _id });
+    if (!pet) {
+      return res.status(404).json({
+        message: "Pet node found",
+      });
+    }
+
+    pet.latestRequest = false;
+    pet.lastFed = Date.now();
+    await pet.save();
+  } catch (err) {
+    return res.status(500).json({
+      message: "Internal Server Error",
+    });
+  }
+};
